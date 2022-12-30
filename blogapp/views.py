@@ -8,6 +8,13 @@ from rest_framework.viewsets import ModelViewSet
 class CategoryList(ListCreateAPIView):
   queryset = Category.objects.all()
   serializer_class = CategorySerializer
+  
+  #? filter
+  filterset_fields = ["name"]
+  
+  #? search
+  search_fields = ["name"]
+  ordering_fields = ['id']
 
 #! concreteAPIview
 class CategoryDetail(RetrieveUpdateDestroyAPIView):
@@ -18,4 +25,11 @@ class CategoryDetail(RetrieveUpdateDestroyAPIView):
 class PostMVS(ModelViewSet):
   queryset = Post.objects.all()
   serializer_class = PostSerializer
+  
+  #? filter
+  filterset_fields = ["category"]
+  
+  #? search
+  search_fields = ["title"]
+  ordering_fields = ['id']
   
