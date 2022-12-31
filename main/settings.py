@@ -41,8 +41,12 @@ INSTALLED_APPS = [
     
     #apps
     'blogapp',
+    'user',
+    
+    #3rd party
     'rest_framework',
     'django_filters',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -146,4 +150,10 @@ REST_FRAMEWORK = {
 
     # filter + search + ordering
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend', 'rest_framework.filters.SearchFilter', 'rest_framework.filters.OrderingFilter'],
+    
+    # BASIC authentication
+    # 'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.BasicAuthentication']
+    
+    # TOKEN authentication
+    'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.TokenAuthentication']
 }
