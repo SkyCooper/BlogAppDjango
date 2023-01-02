@@ -3,7 +3,9 @@ from django.db import models
 # Create your models here.
 
 class Category(models.Model):
-  name = models.CharField(max_length=50)
+  # id = yazmaya gerek yok, django zaten default id üretiyor.
+  name = models.CharField(max_length=50, unique=True) 
+  #? her kategoriden sadece 1 tane create edilsin diye unique=True verildi.
   
   def __str__(self):
     return self.name
@@ -18,12 +20,19 @@ class Post(models.Model):
     (3, 'Low')
   )
   
+  STATUS = (
+    ('p', 'Published'),
+    ('d', 'Draft')
+  )
+  
   priority = models.SmallIntegerField(choices=PRIORITY, default=3)
   
-  category = models.ForeignKey(Category, on_delete=models.CASCADE)
-  title = models.CharField(max_length=50)
-  content = models.TextField(max_length=50, blank=True)
-  status = models.BooleanField(default=False)
+  title = models.CharField(max_length=100)
+  content = models.TextField(blank=True) # max_length vermeye gerek yok, istediği kadar yazsın, veya boş geçebilsin
+  category = models.ForeignKey(Category, on_delete=models.PROTECT, null=True)
+  #? PROTECT , yani bu Category içinde Post varsa onu koru, silinmesine izin verme
+  # status = models.CharField(max_length=100, choices=STATUS, default='d')
+  is_published = models.BooleanField(default=False)
   created_date = models.DateTimeField(auto_now_add=True)
   updated_date = models.DateTimeField(auto_now=True)
   
