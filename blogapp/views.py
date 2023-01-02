@@ -41,7 +41,7 @@ class CategoryList(ListCreateAPIView):
   # permission_classes = [IsAuthenticatedOrReadOnly]
   
   #todo, admin olan herşeyi yapar, olmayan sadece GET(read) yapar. (BUNU biz kendimiz yazdık)
-  permission_classes = [IsAdminUserOrReadOnly]
+  # permission_classes = [IsAdminUserOrReadOnly]
 
 #! concreteAPIview
 class CategoryDetail(RetrieveUpdateDestroyAPIView):
@@ -50,16 +50,20 @@ class CategoryDetail(RetrieveUpdateDestroyAPIView):
   
   #? permissions
   # permission_classes = [IsAuthenticated]
-  permission_classes = [IsAdminUser]
+  # permission_classes = [IsAdminUser]
   
 
 #! ModelViewSet
 class PostMVS(ModelViewSet):
+  # queryset = Post.objects.filter(is_published=True) #? böylede yazılabilir.
   queryset = Post.objects.all()
   serializer_class = PostSerializer
   
   #? filter
-  filterset_fields = ["category"]
+  filterset_fields = ["category"] #? category id'ye göre filitreler,
+  # filterset_fields = ["category__name"] 
+  #? şimdi Post modelden category gider, o da Category modelden name ile bağlantılı olduğundan name alır, 
+  #? ve name'e göre filitreler
   
   #? search
   search_fields = ["title"]
@@ -73,7 +77,7 @@ class PostMVS(ModelViewSet):
   # permission_classes = [IsAdminUser]
   
   #* Authenticate olan (yani giriş yapan) herşeyi yapar, olmayan sadece GET(read) yapar.
-  permission_classes = [IsAuthenticatedOrReadOnly]
+  # permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class AuthorMVS(ModelViewSet):

@@ -7,9 +7,14 @@ class CategorySerializer(serializers.ModelSerializer):
     fields = ['id', 'name']
   
 class PostSerializer(serializers.ModelSerializer):
+  category = serializers.StringRelatedField() 
+  #? artık field içinde category id olarak değil string olarak görünecek,
+  #? fakat create ederken yukarıdaki kullanılamaz, onun için category_id tanımlanır. 
+  category_id = serializers.IntegerField(write_only=True)
+  #? write_only=True olduğu için create ederken yazılır, get yapınca çıktıda görünmez. 
   class Meta:
     model = Post
-    fields = ['id', 'category', 'title']
+    fields = ['id', 'category', 'title', 'category_id', 'content', 'is_published', 'created_date']
     
 class AuthorSerializer(serializers.ModelSerializer):
   class Meta:
