@@ -1,6 +1,8 @@
 from rest_framework import serializers
-# default Usr modeli import ediyoruz, 
+
+# default User modeli import ediyoruz, 
 from django.contrib.auth.models import User
+from rest_framework.validators import UniqueValidator
 
 class RegisterSerializer(serializers.ModelSerializer):
   email = serializers.EmailField(required=True, validators=[UniqueValidator(queryset=User.objects.all())])
