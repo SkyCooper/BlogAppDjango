@@ -8,14 +8,11 @@ from rest_framework.viewsets import ModelViewSet
 #! permissions
 from rest_framework.permissions import BasePermission, IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
 
-
-#? herkes okusun ama sadece admin olan create/update yapabilmesi için ilave bir metod yazdık.
-class IsAdminUserOrReadOnly(BasePermission):  #? IsAdminUserOrReadOnly bu ismi  biz yazdık
-    def has_permission(self, request, view):
-        if request.method in ['GET']:
-            return True
-        else:
-            return request.user.is_staff
+#? permission.py dosyası oluşturup orada tanımlandı, burası çok kalabalık olmasın diye.
+from .permissions import (
+  IsAdminOrReadOnly,        #? biz yazdık (yapay zeka)
+  IsAdminUserOrReadOnly     #? sinan hoca yazdı
+  )
 
 
 #! concreteAPIview
